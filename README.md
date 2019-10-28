@@ -38,7 +38,7 @@ rosrun beginner_tutorials listener
 ```
 
 ## Notes
-The package.xml file use *exec_depend<>* instead of *run_depend<>*. For this format change, '<package>' has been updated to '<package format="2">'.
+The package.xml file use *exec_depend<>* instead of *run_depend<>*. For this format change, 'package' in line 2 has been updated to 'package format="2"'.
 
 
 
