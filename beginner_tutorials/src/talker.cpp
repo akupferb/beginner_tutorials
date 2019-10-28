@@ -13,6 +13,12 @@
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
 
+/**
+*  @brief   This is the main function
+*  @param	argc for ROS
+*  @param	argv for ROS
+*  @return	0 Exit status
+*/
 int main(int argc, char **argv) {
   ros::init(argc, argv, "talker");
 
@@ -27,7 +33,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
     std::stringstream ss;
     
-    ss << " Ari says: ""Hello, ROS world!"" " << count;
+    ss << " Ari says: ""Hello ROS & 808X!"" " << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
