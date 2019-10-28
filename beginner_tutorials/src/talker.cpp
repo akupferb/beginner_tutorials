@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
   while (ros::ok()) {
     std_msgs::String msg;
     std::stringstream ss;
-    
+
     ss << " Ari says: ""Hello ROS & 808X!"" " << count;
     msg.data = ss.str();
 
