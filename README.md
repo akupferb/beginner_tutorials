@@ -6,7 +6,9 @@ The ROS package beginner_tutorials is taken from a basic catkin workspace create
 
 ## Assumptions/Dependencies
 The code assumes you are using *Ros Kinetic*.
+
 The package builds using *catkin*.
+
 This package relies on the following dependencies that must be installed:
 * roscpp
 * rospy
@@ -14,11 +16,12 @@ This package relies on the following dependencies that must be installed:
 
 ## To Run
 Open three separate terminals.
-terminal 1: 
+
+Terminal 1: 
 ```
 roscore
 ```
-terminal 2:
+Terminal 2:
 ```
 cd <your catkin workspace source file>
 git clone https://github.com/akupferb/beginner_tutorials.git
@@ -27,7 +30,7 @@ catkin_make
 source devel/setup.bash
 rosrun beginner_tutorials talker
 ```
-terminal 2:
+Terminal 3:
 ```
 cd <your catkin workspace>
 source devel/setup.bash
