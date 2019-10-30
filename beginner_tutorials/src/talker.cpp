@@ -8,6 +8,7 @@
 #include <sstream>
 #include "std_msgs/String.h"
 #include "ros/ros.h"
+#include <log4cxx/logger.h>
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -20,31 +21,67 @@
 *  @return	0 Exit status
 */
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "talker");
+   // Initialize the ROS system
+   ros::init(argc, argv, "talker");
+   
+   // --------
+   // 2 lines of code, taken from the book, that activate DEBUG log viewing in console:
+   log4cxx::Logger::getLogger(ROSCONSOLE_DEFAULT_NAME)->setLevel(ros::console::g_level_lookup[ros::console::levels::Debug]);
+   ros::console::notifyLoggerLevelsChanged();
+   // --------
 
-  ros::NodeHandle n;
+   // Establish this program as a ROS node
+   ros::NodeHandle n;
 
-  ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+   // Create Publisher object
+   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
-  ros::Rate loop_rate(10);
+   // Loop at 5 Hz until the node is shut down
+   ros::Rate loop_rate(5);
 
-  int count = 0;
-  while (ros::ok()) {
-    std_msgs::String msg;
-    std::stringstream ss;
+   int count = 0;
+   std::string textString;
+   while (ros::ok()) {
+   
+      if (count > 100) {
+         // Send a one-time output as a log message of 'error' level
+         ROS_ERROR_STREAM_ONCE("RESTARTING COUNT");
+         count = 0;
+      }
+      textString = " Ari says: Good morning 808X ";
+      if (count > 25) {
+         // Send a one-time  output as a log message of 'debug' level
+         ROS_DEBUG_STREAM_ONCE(count-1 << " iterations have passed.");
+         textString = " Ari says: Good afternoon 808X! ";
+      }
+      if (count > 50) {
+         // Send a one-time output as a log message of 'info' level
+         ROS_INFO_STREAM_ONCE(count-1 << " iterations have passed!");
+         textString = " Ari says: Good evening 808X!! ";
+      }
+      if (count > 75) {
+         // Send a one-time output as a log message of 'warn' level
+         ROS_WARN_STREAM_ONCE(count-1 << " ITERATIONS HAVE PASSED!!!");
+         textString = " Ari says: GOOD NIGHT 808X!!! ";
+      }
 
-    ss << " Ari says: ""Hello ROS & 808X!"" " << count;
-    msg.data = ss.str();
+      // Assign the string to the message data
+      std_msgs::String msg;
+      msg.data = textString;
 
-    ROS_INFO("%s", msg.data.c_str());
+      // ROS_INFO("%s", msg.data.c_str());
 
-    chatter_pub.publish(msg);
+      // Publish the message to the 'chatter' topic
+      chatter_pub.publish(msg);
+      
+      // Give one-time control to ROS
+      ros::spinOnce();
 
-    ros::spinOnce();
+      // Wait until next iteration
+      loop_rate.sleep();
+      // Increase counter
+      ++count;
+   }
 
-    loop_rate.sleep();
-    ++count;
-  }
-
-  return 0;
+   return 0;
 }
