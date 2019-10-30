@@ -51,29 +51,30 @@ int main(int argc, char **argv) {
    int count = 0;
    std::string textString;
    while (ros::ok()) {
-   
+
+      ROS_DEBUG_STREAM_ONCE("The counter will restart every 100 iterations.");
       if (count > 100) {
          // Send a one-time output as a log message of 'error' level
-         ROS_ERROR_STREAM_ONCE("RESTARTING COUNT");
+         ROS_ERROR_STREAM_THROTTLE(20, "RESTARTING COUNT");
          count = 0;
       }
       textString = " says: Good morning 808X ";
       if (count > 25) {
          // Send a one-time  output as a log message of 'debug' level
-         ROS_DEBUG_STREAM_ONCE(count-1 << " iterations have passed.");
+         ROS_DEBUG_STREAM_THROTTLE(20, count-1 << " iterations have passed.");
          textString = " says: Good afternoon 808X! ";
       }
       if (count > 50) {
          // Send a one-time output as a log message of 'info' level
-         ROS_INFO_STREAM_ONCE(count-1 << " iterations have passed!");
+         ROS_INFO_STREAM_THROTTLE(20, count-1 << " iterations have passed!");
          textString = " says: Good evening 808X!! ";
       }
       if (count > 75) {
          // Send a one-time output as a log message of 'warn' level
-         ROS_WARN_STREAM_ONCE(count-1 << " ITERATIONS HAVE PASSED!!!");
+         ROS_WARN_STREAM_THROTTLE(20, count-1 << " ITERATIONS HAVE PASSED!!!");
          textString = " says: GOOD NIGHT 808X!!! ";
       }
-      
+
       // Concatenate the string into a string stream
       std::stringstream ss;
       ss << " " << speakerName << textString;
