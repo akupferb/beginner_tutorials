@@ -1,0 +1,25 @@
+<launch>
+
+   <arg
+      name = "speaker"
+      default = "Ari"
+   />
+
+   <node 
+      pkg="beginner_tutorials"
+      type="talker"
+      name="talking_node"
+      respawn = "true"
+      output = "screen"
+   >
+      <param name="speaker" value="$(arg speaker)" />
+   </node>
+   
+   <node 
+      pkg="beginner_tutorials"
+      type="listener"
+      name="listening_node"
+      respawn = "true"
+      output = "screen"
+   />
+</launch>

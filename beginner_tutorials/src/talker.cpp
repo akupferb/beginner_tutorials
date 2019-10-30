@@ -33,6 +33,15 @@ int main(int argc, char **argv) {
    // Establish this program as a ROS node
    ros::NodeHandle n;
 
+   // Get the parameter value for string "speakerName" from ROS Parameters
+   const std::string PARAM_NAME = "~speaker";
+   std::string speakerName;
+   bool ok = ros::param::get(PARAM_NAME, speakerName);
+   if (!ok) {
+      ROS_FATAL_STREAM("Could not get parameter: " << PARAM_NAME);
+      exit(1);
+   }
+   
    // Create Publisher object
    ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
@@ -48,26 +57,30 @@ int main(int argc, char **argv) {
          ROS_ERROR_STREAM_ONCE("RESTARTING COUNT");
          count = 0;
       }
-      textString = " Ari says: Good morning 808X ";
+      textString = " says: Good morning 808X ";
       if (count > 25) {
          // Send a one-time  output as a log message of 'debug' level
          ROS_DEBUG_STREAM_ONCE(count-1 << " iterations have passed.");
-         textString = " Ari says: Good afternoon 808X! ";
+         textString = " says: Good afternoon 808X! ";
       }
       if (count > 50) {
          // Send a one-time output as a log message of 'info' level
          ROS_INFO_STREAM_ONCE(count-1 << " iterations have passed!");
-         textString = " Ari says: Good evening 808X!! ";
+         textString = " says: Good evening 808X!! ";
       }
       if (count > 75) {
          // Send a one-time output as a log message of 'warn' level
          ROS_WARN_STREAM_ONCE(count-1 << " ITERATIONS HAVE PASSED!!!");
-         textString = " Ari says: GOOD NIGHT 808X!!! ";
+         textString = " says: GOOD NIGHT 808X!!! ";
       }
+      
+      // Concatenate the string into a string stream
+      std::stringstream ss;
+      ss << " " << speakerName << textString;
 
       // Assign the string to the message data
       std_msgs::String msg;
-      msg.data = textString;
+      msg.data = ss.str();
 
       // ROS_INFO("%s", msg.data.c_str());
 
