@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <std_msgs/String.h>
 #include <std_srvs/Empty.h>
+#include <log4cxx/logger.h>
 #include <sstream>
 #include "ros/ros.h"
 
