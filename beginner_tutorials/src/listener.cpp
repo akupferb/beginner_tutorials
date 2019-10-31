@@ -17,9 +17,9 @@
 bool header = true;
 
 /**
-*  @brief   Function Callback for Service that changes a boolean value
-*  @param	Service Request Type variable passed by reference
-*  @param	Service Response Type variable passed by reference
+*  @brief   Callback Function for Service that changes a boolean value
+*  @param	  Service Request Type variable passed by reference
+*  @param	  Service Response Type variable passed by reference
 *  @return	boolean true
 */
 bool toggleHeader(std_srvs::Empty::Request &req,
@@ -31,8 +31,8 @@ bool toggleHeader(std_srvs::Empty::Request &req,
 }
 
 /**
-*  @brief   Function Callback for Subscriber that prints a text string
-*  @param	constant msg type passed as a pointer
+*  @brief   Callback Function for Subscriber that prints a text string
+*  @param	  constant msg type passed as a pointer
 *  @return	None
 */
 void chatterCallback(const std_msgs::String::ConstPtr& msg) {
@@ -42,8 +42,8 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg) {
 
 /**
 *  @brief   This is the main function
-*  @param	argc for ROS
-*  @param	argv for ROS
+*  @param	  argc for ROS
+*  @param	  argv for ROS
 *  @return	0 Exit status
 */
 int main(int argc, char **argv) {
