@@ -33,12 +33,21 @@ int main(int argc, char **argv) {
    // Establish this program as a ROS node
    ros::NodeHandle n;
 
-   // Get the parameter value for string "speakerName" from ROS Parameters
-   const std::string PARAM_NAME = "~speaker";
    std::string speakerName;
-   bool ok = ros::param::get(PARAM_NAME, speakerName);
-   if (!ok) {
-      ROS_FATAL_STREAM("Could not get parameter: " << PARAM_NAME);
+   int loopRate;
+   // Get the parameter values for 'speakerName' & 'loopRate' from ROS Parameters
+   const std::string PARAM1 = "~speaker";
+   bool ok1 = ros::param::get(PARAM1, speakerName);
+   const std::string PARAM2 = "~looper";
+   bool ok2 = ros::param::get(PARAM2, loopRate);
+   
+   // If parameter does not return a value, produce error message, and exit program
+   if (!ok1) {
+      ROS_FATAL_STREAM("Could not get parameter: " << PARAM1);
+      exit(1);
+   }
+   if (!ok2) {
+      ROS_FATAL_STREAM("Could not get parameter: " << PARAM2);
       exit(1);
    }
    
@@ -46,7 +55,7 @@ int main(int argc, char **argv) {
    ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
    // Loop at 5 Hz until the node is shut down
-   ros::Rate loop_rate(5);
+   ros::Rate loopCycle(loopRate);
 
    int count = 0;
    std::string textString;
@@ -92,7 +101,7 @@ int main(int argc, char **argv) {
       ros::spinOnce();
 
       // Wait until next iteration
-      loop_rate.sleep();
+      loopCycle.sleep();
       // Increase counter
       ++count;
    }

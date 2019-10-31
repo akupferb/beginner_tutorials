@@ -4,6 +4,10 @@
       name = "speaker"
       default = "Ari"
    />
+   <arg
+      name = "looper"
+      default = "5"
+   />
 
    <node 
       pkg="beginner_tutorials"
@@ -13,6 +17,7 @@
       output = "screen"
    >
       <param name="speaker" value="$(arg speaker)" />
+      <param name="looper" value="$(arg looper)" />
    </node>
    
    <node 
