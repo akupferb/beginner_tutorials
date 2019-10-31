@@ -1,5 +1,7 @@
 $ cpplint $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build/" -e "^./vendor/" -e "^./docs/" -e "^./results" )
 
-Done processing ./src/beginner_tutorials/src/talker.cpp
-Done processing ./src/beginner_tutorials/src/listener.cpp
-
+Done processing ./beginner_tutorials/src/talker.cpp
+./beginner_tutorials/src/listener.cpp:25:  Is this a non-const reference? If so, make const or use a pointer: std_srvs::Empty::Request &req  [runtime/references] [2]
+./beginner_tutorials/src/listener.cpp:26:  Is this a non-const reference? If so, make const or use a pointer: std_srvs::Empty::Response &resp  [runtime/references] [2]
+Done processing ./beginner_tutorials/src/listener.cpp
+Total errors found: 2

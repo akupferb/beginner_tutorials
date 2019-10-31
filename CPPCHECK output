@@ -1,7 +1,9 @@
-$ cppcheck --enable=all --std=c++11 --suppress=missingIncludeSystem $( find . -name *.cpp | grep -vE -e "^./build/" -e "^./vendor/" )
+$ cppcheck --enable=all --std=c++11 -I include/ --suppress=missingIncludeSystem $( find . -name *.cpp | grep -vE -e "^./build/" -e "^./vendor/" )
 
-Checking src/beginner_tutorials/src/listener.cpp...
-1/2 files checked 42% done
-Checking src/beginner_tutorials/src/talker.cpp...
+(information) Couldn't find path given by -I 'include/'
+Checking beginner_tutorials/src/listener.cpp...
+1/2 files checked 36% done
+Checking beginner_tutorials/src/talker.cpp...
 2/2 files checked 100% done
+(information) Cppcheck cannot find all the include files (use --check-config for details)
 

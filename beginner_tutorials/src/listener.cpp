@@ -5,7 +5,7 @@
  * @brief       ROS file for subscribing to text strings, 
  *              and changing output based on service calls
  */
-#include "std_msgs/String.h"
+#include <std_msgs/String.h>
 #include <std_srvs/Empty.h>
 #include "ros/ros.h"
 
@@ -22,11 +22,12 @@ bool header = true;
 *  @param	Service Response Type variable passed by reference
 *  @return	boolean true
 */
-bool toggleHeader( std_srvs::Empty::Request &req,
+bool toggleHeader(std_srvs::Empty::Request &req,
                     std_srvs::Empty::Response &resp) {
-   header = !header;
-   ROS_WARN_STREAM("Header changed to: " << (header?"'I heard'":"'Listen now'"));
-   return true;
+  header = !header;
+  ROS_WARN_STREAM("Header changed to: "
+             << (header?"'I heard'":"'Listen now'"));
+  return true;
 }
 
 /**
@@ -35,7 +36,8 @@ bool toggleHeader( std_srvs::Empty::Request &req,
 *  @return	None
 */
 void chatterCallback(const std_msgs::String::ConstPtr& msg) {
-   ROS_INFO_STREAM((header?"I heard":"Listen now") << ": [" << msg->data << "]");
+  ROS_INFO_STREAM((header?"I heard":"Listen now")
+                          << ": [" << msg->data << "]");
 }
 
 /**
@@ -45,20 +47,21 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg) {
 *  @return	0 Exit status
 */
 int main(int argc, char **argv) {
-   // Initialize the ROS system
-   ros::init(argc, argv, "listener");
+  // Initialize the ROS system
+  ros::init(argc, argv, "listener");
 
-   // Establish this program as a ROS node
-   ros::NodeHandle nh;
+  // Establish this program as a ROS node
+  ros::NodeHandle nh;
 
-   // Register our service with the master
-   ros::ServiceServer server = nh.advertiseService("toggle_header", &toggleHeader);
+  // Register our service with the master
+  ros::ServiceServer server = nh.advertiseService(
+                         "toggle_header", &toggleHeader);
 
-   // Create a Subscriber object
-   ros::Subscriber sub = nh.subscribe("chatter", 1000, chatterCallback);
+  // Create a Subscriber object
+  ros::Subscriber sub = nh.subscribe("chatter", 1000, chatterCallback);
 
-   // Give control to ROS
-   ros::spin();
+  // Give control to ROS
+  ros::spin();
 
-   return 0;
+  return 0;
 }

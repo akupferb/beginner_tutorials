@@ -5,10 +5,11 @@
  * @brief       ROS file for publishing text strings
  */
 
+#include <std_msgs/String.h>
+#include <std_srvs/Empty.h>
 #include <sstream>
-#include "std_msgs/String.h"
 #include "ros/ros.h"
-#include <log4cxx/logger.h>
+
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -21,90 +22,93 @@
 *  @return	0 Exit status
 */
 int main(int argc, char **argv) {
-   // Initialize the ROS system
-   ros::init(argc, argv, "talker");
-   
-   // --------
-   // 2 lines of code, taken from the book, that activate DEBUG log viewing in console:
-   log4cxx::Logger::getLogger(ROSCONSOLE_DEFAULT_NAME)->setLevel(ros::console::g_level_lookup[ros::console::levels::Debug]);
-   ros::console::notifyLoggerLevelsChanged();
-   // --------
+  // Initialize the ROS system
+  ros::init(argc, argv, "talker");
 
-   // Establish this program as a ROS node
-   ros::NodeHandle n;
+  // --------
+  // 2 lines of code, taken from the book,
+  // that activate DEBUG log viewing in console:
+  log4cxx::Logger::getLogger(ROSCONSOLE_DEFAULT_NAME)->setLevel(
+       ros::console::g_level_lookup[ros::console::levels::Debug]);
+  ros::console::notifyLoggerLevelsChanged();
+  // --------
 
-   std::string speakerName;
-   int loopRate;
-   // Get the parameter values for 'speakerName' & 'loopRate' from ROS Parameters
-   const std::string PARAM1 = "~speaker";
-   bool ok1 = ros::param::get(PARAM1, speakerName);
-   const std::string PARAM2 = "~looper";
-   bool ok2 = ros::param::get(PARAM2, loopRate);
-   
-   // If parameter does not return a value, produce error message, and exit program
-   if (!ok1) {
-      ROS_FATAL_STREAM("Could not get parameter: " << PARAM1);
-      exit(1);
-   }
-   if (!ok2) {
-      ROS_FATAL_STREAM("Could not get parameter: " << PARAM2);
-      exit(1);
-   }
-   
-   // Create Publisher object
-   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  // Establish this program as a ROS node
+  ros::NodeHandle n;
 
-   // Loop at 5 Hz until the node is shut down
-   ros::Rate loopCycle(loopRate);
+  std::string speakerName;
+  int loopRate;
+  // Get the parameter values for 'speakerName'
+  // & 'loopRate' from ROS Parameters
+  const std::string PARAM1 = "~speaker";
+  bool ok1 = ros::param::get(PARAM1, speakerName);
+  const std::string PARAM2 = "~looper";
+  bool ok2 = ros::param::get(PARAM2, loopRate);
 
-   int count = 0;
-   std::string textString;
-   while (ros::ok()) {
+  // If parameter does not return a value,
+  // produce error message, and exit program
+  if (!ok1) {
+    ROS_FATAL_STREAM("Could not get parameter: " << PARAM1);
+    exit(1);
+  }
+  if (!ok2) {
+    ROS_FATAL_STREAM("Could not get parameter: " << PARAM2);
+    exit(1);
+  }
 
-      ROS_DEBUG_STREAM_ONCE("The counter will restart every 100 iterations.");
-      if (count > 100) {
-         // Send a one-time output as a log message of 'error' level
-         ROS_ERROR_STREAM_THROTTLE(20, "RESTARTING COUNT");
-         count = 0;
-      }
-      textString = " says: Good morning 808X ";
-      if (count > 25) {
-         // Send a one-time  output as a log message of 'debug' level
-         ROS_DEBUG_STREAM_THROTTLE(20, count-1 << " iterations have passed.");
-         textString = " says: Good afternoon 808X! ";
-      }
-      if (count > 50) {
-         // Send a one-time output as a log message of 'info' level
-         ROS_INFO_STREAM_THROTTLE(20, count-1 << " iterations have passed!");
-         textString = " says: Good evening 808X!! ";
-      }
-      if (count > 75) {
-         // Send a one-time output as a log message of 'warn' level
-         ROS_WARN_STREAM_THROTTLE(20, count-1 << " ITERATIONS HAVE PASSED!!!");
-         textString = " says: GOOD NIGHT 808X!!! ";
-      }
+  // Create Publisher object
+  ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
-      // Concatenate the string into a string stream
-      std::stringstream ss;
-      ss << " " << speakerName << textString;
+  // Loop at 5 Hz until the node is shut down
+  ros::Rate loopCycle(loopRate);
 
-      // Assign the string to the message data
-      std_msgs::String msg;
-      msg.data = ss.str();
+  int count = 0;
+  std::string textString;
+  while (ros::ok()) {
+    ROS_DEBUG_STREAM_ONCE("The counter will restart every 100 iterations.");
+    if (count > 100) {
+      // Send a one-time output as a log message of 'error' level
+      ROS_ERROR_STREAM_THROTTLE(20, "RESTARTING COUNT");
+      count = 0;
+    }
+    textString = " says: Good morning 808X ";
+    if (count > 25) {
+      // Send a one-time  output as a log message of 'debug' level
+      ROS_DEBUG_STREAM_THROTTLE(20, count-1 << " iterations have passed.");
+      textString = " says: Good afternoon 808X! ";
+    }
+    if (count > 50) {
+      // Send a one-time output as a log message of 'info' level
+      ROS_INFO_STREAM_THROTTLE(20, count-1 << " iterations have passed!");
+      textString = " says: Good evening 808X!! ";
+    }
+    if (count > 75) {
+      // Send a one-time output as a log message of 'warn' level
+      ROS_WARN_STREAM_THROTTLE(20, count-1 << " ITERATIONS HAVE PASSED!!!");
+      textString = " says: GOOD NIGHT 808X!!! ";
+    }
 
-      // ROS_INFO("%s", msg.data.c_str());
+    // Concatenate the string into a string stream
+    std::stringstream ss;
+    ss << " " << speakerName << textString;
 
-      // Publish the message to the 'chatter' topic
-      chatter_pub.publish(msg);
-      
-      // Give one-time control to ROS
-      ros::spinOnce();
+    // Assign the string to the message data
+    std_msgs::String msg;
+    msg.data = ss.str();
 
-      // Wait until next iteration
-      loopCycle.sleep();
-      // Increase counter
-      ++count;
-   }
+    // ROS_INFO("%s", msg.data.c_str());
 
-   return 0;
+    // Publish the message to the 'chatter' topic
+    chatter_pub.publish(msg);
+
+    // Give one-time control to ROS
+    ros::spinOnce();
+
+    // Wait until next iteration
+    loopCycle.sleep();
+    // Increase counter
+    ++count;
+  }
+
+  return 0;
 }
