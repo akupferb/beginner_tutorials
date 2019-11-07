@@ -1,38 +1,44 @@
-<launch>
+  <launch>
 
-   <arg
-      name = "speaker"
-      default = "Ari"
-   />
-   <arg
-      name = "looper"
-      default = "5"
-   />
+  <arg
+    name = "speaker"
+    default = "Ari"
+  />
+  <arg
+    name = "looper"
+    default = "5"
+  />
+  <arg
+    name="use_rosbag"
+    default="0"
+  />
 
-   <node 
-      pkg="beginner_tutorials"
-      type="talker"
-      name="talking_node"
-      respawn = "true"
-      output = "screen"
-   >
-      <param name="speaker" value="$(arg speaker)" />
-      <param name="looper" value="$(arg looper)" />
-   </node>
-   
-   <node 
-      pkg="beginner_tutorials"
-      type="listener"
-      name="listening_node"
-      respawn = "true"
-      output = "screen"
-   />
-   
-   <node
+  <node 
+    pkg="beginner_tutorials"
+    type="talker"
+    name="talking_node"
+    respawn = "true"
+    output = "screen"
+  >
+    <param name="speaker" value="$(arg speaker)" />
+    <param name="looper" value="$(arg looper)" />
+  </node>
+
+  <node 
+    pkg="beginner_tutorials"
+    type="listener"
+    name="listening_node"
+    respawn = "true"
+    output = "screen"
+  />
+
+  <group if="$(arg use_rosbag)">
+    <node
       pkg="rosbag"
       type="record"
       name="record_talk"
       args="-a"
-   />
-
+    />
+  </group>
+  
 </launch>
