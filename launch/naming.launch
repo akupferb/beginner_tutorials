@@ -27,4 +27,12 @@
       respawn = "true"
       output = "screen"
    />
+   
+   <node
+      pkg="rosbag"
+      type="record"
+      name="record_talk"
+      args="-a"
+   />
+
 </launch>
