@@ -31,12 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * @date        10/27/2019
  * @brief       ROS file for publishing text strings
  */
-
+ 
+#include <cmath>
 #include <std_msgs/String.h>
 #include <std_srvs/Empty.h>
 #include <log4cxx/logger.h>
 #include <sstream>
-#include "ros/ros.h"
+#include <ros/ros.h>
+#include <tf/transform_broadcaster.h>
 
 
 /**
@@ -56,8 +58,7 @@ int main(int argc, char **argv) {
   // --------
   // 2 lines of code, taken from the book,
   // that activate DEBUG log viewing in console:
-  log4cxx::Logger::getLogger(ROSCONSOLE_DEFAULT_NAME)->setLevel(
-       ros::console::g_level_lookup[ros::console::levels::Debug]);
+  log4cxx::Logger::getLogger(ROSCONSOLE_DEFAULT_NAME)->setLevel(ros::console::g_level_lookup[ros::console::levels::Debug]);
   ros::console::notifyLoggerLevelsChanged();
   // --------
 
@@ -128,6 +129,22 @@ int main(int argc, char **argv) {
 
     // Publish the message to the 'chatter' topic
     chatter_pub.publish(msg);
+
+    // ------
+    // Create the transform broadcaster object 
+    static tf::TransformBroadcaster br;
+    // Create the transform object
+    tf::Transform transform;
+    // Set the frame translation
+    transform.setOrigin(tf::Vector3(3.0, 5.0, 2.0));
+    // Create and set a quaternion object
+    tf::Quaternion q;
+    q.setRPY(0, 0, M_PI/2);
+    // Set the frame rotation
+    transform.setRotation(q);
+    // Send the transform into the ether
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
+    // ------
 
     // Give one-time control to ROS
     ros::spinOnce();

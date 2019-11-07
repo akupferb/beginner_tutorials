@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   genmsg
+  tf
 )
 
 ## Generate added messages and services
