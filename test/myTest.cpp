@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * @date        11/10/2019
  * @brief       RosTest for Talker node TF broadcaster
  */
- 
+
 #include <tf/transform_listener.h>
 #include <ros/ros.h>
 #include <gtest/gtest.h>
@@ -52,7 +52,7 @@ TEST(TESTSuite, testTfBroadcast) {
 
   listener.waitForTransform("/world", "/talk", ros::Time(0), ros::Duration(10));
   listener.lookupTransform("/world", "/talk", ros::Time(0), transform);
-  
+
   double z = transform.getOrigin().z();
   EXPECT_EQ(z, 2);
 }

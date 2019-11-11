@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <launch>
-  <node pkg="beginner_tutorials" type="talker" name="talking_node" />
+  <node pkg="beginner_tutorials" type="talker" name="talking_node" >
+    <param name="speaker" value="Ari" />
+    <param name="looper" value="5" />
+  </node>
   <test pkg="beginner_tutorials" type="myTest" test-name="myTest" />
 </launch>
 
