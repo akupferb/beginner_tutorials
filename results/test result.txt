@@ -1,0 +1,19 @@
+testmyTest ... ok
+
+[ROSTEST]-----------------------------------------------------------------------
+
+[beginner_tutorials.rosunit-myTest/testTfBroadcast][passed]
+
+SUMMARY
+ * RESULT: SUCCESS
+ * TESTS: 1
+ * ERRORS: 0
+ * FAILURES: 0
+
+rostest log file is in /home/ari/.ros/log/rostest-skywalker-87650.log
+-- run_tests.py: verify result "/home/ari/ros/catkin_ws/build/test_results/beginner_tutorials/rostest-test_myTest.xml"
+[100%] Built target _run_tests_beginner_tutorials_rostest_test_myTest.test
+[100%] Built target _run_tests_beginner_tutorials_rostest
+[100%] Built target _run_tests_beginner_tutorials
+[100%] Built target run_tests
+
