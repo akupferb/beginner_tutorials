@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="beginner_tutorials" type="talker" name="talking_node" />
+  <test pkg="beginner_tutorials" type="myTest" test-name="myTest" />
+</launch>
+
+
