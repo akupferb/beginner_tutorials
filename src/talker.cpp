@@ -31,14 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * @date        10/27/2019
  * @brief       ROS file for publishing text strings
  */
- 
-#include <cmath>
+
 #include <std_msgs/String.h>
 #include <std_srvs/Empty.h>
 #include <log4cxx/logger.h>
-#include <sstream>
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
+#include <sstream>
+#include <cmath>
 
 
 /**
@@ -131,7 +131,7 @@ int main(int argc, char **argv) {
     chatter_pub.publish(msg);
 
     // ------
-    // Create the transform broadcaster object 
+    // Create the transform broadcaster object
     static tf::TransformBroadcaster br;
     // Create the transform object
     tf::Transform transform;
